@@ -6,17 +6,20 @@
           <img src="../assets/logo.png" alt="">
         </div>
         <!--        登录表单区-->
-        <el-form label-width="0px" class="login_form">
-          <el-form-item >
-            <el-input prefix-icon="el-icon-search" >
+        <el-form ref="loginFormRef" :model="loginForm"
+                 :rules="loginFormRules" label-width="0px" class="login_form">
+<!--          用户名-->
+          <el-form-item prop="username">
+            <el-input v-model="loginForm.username" prefix-icon="iconfont icontouxiang" >
 
             </el-input>
           </el-form-item>
 
 <!--        密码区-->
 
-          <el-form-item >
-            <el-input prefix-icon="el-icon-search" >
+          <el-form-item prop="password">
+            <el-input v-model="loginForm.password" prefix-icon="iconfont iconlock"
+            type="password">
 
             </el-input>
           </el-form-item>
@@ -24,8 +27,8 @@
 <!--        按钮区-->
 
           <el-form-item class="bnts">
-            <el-button type="primary" >登录</el-button>
-            <el-button type="info">重置</el-button>
+            <el-button type="primary" @click="login">登录</el-button>
+            <el-button type="info" @click="resetLoginForm">重置</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -33,7 +36,40 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return{
+      // 这是等率表单的对象
+      loginForm:{
+        username: "zd",
+        password: "123"
+      },
+      loginFormRules:{
+        username:[{ required: true, message: '请输入登录名', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }],
+        password:[{ required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 6, max: 15, message: '长度在 6 到 15个字符', trigger: 'blur' }]
+      }
+    }
+  },
+  methods:{
+    resetLoginForm(){
+      // console.log(this)
+      this.$refs.loginFormRef.resetFields();
+    },
+    login(){
+      this.$refs.loginFormRef.validate(function (valid,obj) {
+        if(!valid) return;
+        const result=this.$http.post('login', this.loginForm);
+      })
+    }
+  }
+  // watch:{
+  //   "loginForm.username"(hj, yu){
+  //     console.log('new: %s, old: %s', hj, yu)
+  //   }
+  // }
+}
 </script>
 
 <style lang="less" scoped>
@@ -80,7 +116,7 @@ export default {}
   width: 100%;
   padding: 0 20px;
   box-sizing: border-box;
-  
+
 }
 
 
