@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "eslint": "eslint --ext .jsx --ext .js --ext .vue src/",
+    "eslint-fix": "eslint --fix --ext .jsx --ext .js --ext .vue src/"
   },
   "dependencies": {
     "core-js": "^3.6.5",
@@ -17,7 +19,7 @@
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
+    "eslint-plugin-vue": "^7.10.0",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
